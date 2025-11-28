@@ -2,7 +2,7 @@ import csv
 from pathlib import Path
 
 
-def read_csv_file(file_path):
+def read_csv_file(file_path: str) -> list[dict[str, str]]:
     path = Path(file_path)
     if not path.exists():
         raise FileNotFoundError(f"Файл не найден: {file_path}")
@@ -12,12 +12,13 @@ def read_csv_file(file_path):
     try:
         with open(path, "r") as csv_file:
             reader = csv.DictReader(csv_file)
-            return list(reader)
+            employees = list(reader)
     except Exception as e:
         raise Exception(f"Ошибка при обработке .csv файла: {e}")
+    return employees
 
 
-def read_csv_files(file_paths):
+def read_csv_files(file_paths: list[str]) -> list[dict[str, str]]:
     all_employees = []
     for file_path in file_paths:
         employees = read_csv_file(file_path)
