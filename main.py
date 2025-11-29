@@ -1,16 +1,47 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import argparse
+import sys
+from csv_reader import read_csv_files
+from perfomance_review import generate_performance_table
 
 
-# Press the green button in the gutter to run the script.
+def parse_arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--files',
+        nargs="+",
+        required=True,
+    )
+    parser.add_argument(
+        '--report',
+        type=str,
+        required=True,
+    )
+    return parser.parse_args()
+
+
+def main():
+    try:
+        args = parse_arguments()
+        try:
+            file_data = read_csv_files(args.files)
+        except (FileNotFoundError, PermissionError) as e:
+            print(f"Ошибка при чтении файлов: {e}")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Неизвестная ошибка при чтении файлов: {e}")
+            sys.exit(1)
+
+        match args.report:
+            case "performance":
+                performance_table = generate_performance_table(file_data)
+                print(performance_table)
+            case _:
+                print(f"Неизвестный/нереализованный тип отчёта: {args.report}")
+
+    except Exception as e:
+        print(f"Критическая ошибка: {e}")
+        sys.exit(1)
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
