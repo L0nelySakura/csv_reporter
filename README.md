@@ -18,12 +18,12 @@
 
 1) Скачайте репозиторий:
 ```sh
-git clone <url_репозитория>
+git clone [<url_репозитория>](https://github.com/L0nelySakura/csv_reporter)
 ```
 
 2) Перейдите в папку проекта:
 ```sh
-cd csv_test
+cd csv_reporter
 ```
 
 3) Установите зависимости:
