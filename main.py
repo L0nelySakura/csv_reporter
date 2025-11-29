@@ -1,7 +1,7 @@
 import argparse
 import sys
 from csv_reader import read_csv_files
-from perfomance_review import generate_performance_table
+from performance_review import generate_performance_table
 
 
 def parse_arguments() -> argparse.Namespace:
